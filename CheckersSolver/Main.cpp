@@ -9,6 +9,6 @@ using namespace std;
 int main()
 {
     SolverPresenter* presenter = new SolverPresenter();
-    FileSolverView* view = new FileSolverView(presenter);
+    SolverContract::View* view = new FileSolverView(presenter);
     presenter->attachView(view);
 }
