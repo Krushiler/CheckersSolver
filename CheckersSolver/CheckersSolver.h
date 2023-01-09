@@ -5,17 +5,18 @@ struct SolverResult {
     std::vector<CheckersMove> moves;
     int movesCount;
     bool success;
+    int score;
 
     SolverResult();
 
-    SolverResult(std::vector<CheckersMove> moves, int movesCount, bool success);
+    SolverResult(std::vector<CheckersMove> moves, int movesCount, bool success, int score);
 };
 
 
 class CheckersSolver
 {
 private:
-    SolverResult findMoves(Field* field, std::vector<CheckersMove> moves, int movesCount, bool whiteStart, bool whiteWinNeeded);
+    SolverResult findMoves(Field* field, std::vector<CheckersMove> moves, int movesCount, bool whiteStart, bool whiteWinNeeded, int startScore);
 public:
     SolverResult getMinimalMovesCount(Field* field, bool whiteFirstStep, bool whiteWinNeeded);
 };

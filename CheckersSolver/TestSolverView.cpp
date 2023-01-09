@@ -11,7 +11,6 @@ TestSolverView::TestSolverView(SolverContract::Presenter* presenter)
 void TestSolverView::showCheckersInput()
 {
 	std::vector<CheckerInputDto> input;
-	
 	input.push_back(CheckerInputDto(std::make_pair(1, 0), false, false));
 	input.push_back(CheckerInputDto(std::make_pair(0, 1), false, false));
 	input.push_back(CheckerInputDto(std::make_pair(0, 3), false, false));
@@ -25,12 +24,13 @@ void TestSolverView::showCheckersInput()
 	input.push_back(CheckerInputDto(std::make_pair(5, 6), true, false));
 	input.push_back(CheckerInputDto(std::make_pair(6, 7), true, false));
 
-	presenter->solve(input, false, false);
+	presenter->solve(input, true, true);
 }
 
 void TestSolverView::showResult(Field* startField, SolverResult result)
 {
 	if (result.success == true) {
+		std::cout << getFieldString(startField) << std::endl << "________" << std::endl << std::endl;;
 		for (auto& move : result.moves) {
 			startField->moveChecker(move);
 			std::cout << getFieldString(startField) << std::endl << "________" << std::endl << std::endl;
@@ -40,6 +40,7 @@ void TestSolverView::showResult(Field* startField, SolverResult result)
 		}
 	}
 	else {
-		std::cout << "Нельзя победить в 2-3 хода";
+		std::cout << "Нельзя победить в 2-3 хода\n";
 	}
+	system("pause");
 }

@@ -4,28 +4,30 @@ SolverResult::SolverResult() {
     success = false;
     movesCount = 0;
     moves = std::vector<CheckersMove>();
+    score = 0;
 }
 
-SolverResult::SolverResult(std::vector<CheckersMove> moves, int movesCount, bool success) {
+SolverResult::SolverResult(std::vector<CheckersMove> moves, int movesCount, bool success, int score) {
     this->moves = moves;
     this->movesCount = movesCount;
     this->success = success;
+    this->score = score;
 }
 
-SolverResult CheckersSolver::findMoves(Field* field, std::vector<CheckersMove> moves, int movesCount, bool whiteStart, bool whiteWinNeeded)
+SolverResult CheckersSolver::findMoves(Field* field, std::vector<CheckersMove> moves, int movesCount, bool whiteStart, bool whiteWinNeeded, int startScore)
 {
     bool whiteCheckersEmpty = field->getWhiteCheckers().empty();
     bool blackCheckersEmpty = field->getBlackCheckers().empty();
 
     if (movesCount > 3 || (whiteWinNeeded && whiteCheckersEmpty || !whiteWinNeeded && blackCheckersEmpty)) {
         delete field;
-        return SolverResult(moves, movesCount, false);
-    }
-    if (whiteWinNeeded && blackCheckersEmpty || !whiteWinNeeded && whiteCheckersEmpty) {
-        return SolverResult(moves, movesCount, true);
+        return SolverResult(moves, movesCount, false, startScore);
     }
 
     auto fieldMoves = field->avaliableMoves;
+
+    std::vector<SolverResult> results;
+    
     for (auto& move : fieldMoves) {
 
         std::vector<CheckersMove> newMoves(moves);
@@ -45,14 +47,21 @@ SolverResult CheckersSolver::findMoves(Field* field, std::vector<CheckersMove> m
             newMovesCount++;
         }
 
-        auto result = findMoves(newField, newMoves, newMovesCount, whiteStart, whiteWinNeeded);
+        results.push_back(findMoves(newField, newMoves, newMovesCount, whiteStart, whiteWinNeeded, startScore));
+    }
 
-        if (result.success) {
-            return result;
+    int currentScore = field->getScoreDifference(whiteWinNeeded);
+
+    SolverResult bestResult = SolverResult(moves, movesCount, true, currentScore);
+
+    
+    for (auto& result : results) {
+        if (result.success && result.score > bestResult.score) {
+            bestResult = result;
         }
     }
 
-    return SolverResult(moves, movesCount, false);
+    return bestResult;
 }
 
 SolverResult CheckersSolver::getMinimalMovesCount(Field* field, bool whiteFirstStep, bool whiteWinNeeded)
@@ -60,5 +69,7 @@ SolverResult CheckersSolver::getMinimalMovesCount(Field* field, bool whiteFirstS
     auto newField = new Field(*field);
     newField->whiteStep = whiteFirstStep;
 
-    return findMoves(newField, std::vector<CheckersMove>(), 0, whiteFirstStep, whiteWinNeeded);
+    int scoreDifference = newField->getScoreDifference(whiteWinNeeded);
+    
+    return findMoves(newField, std::vector<CheckersMove>(), 0, whiteFirstStep, whiteWinNeeded, scoreDifference);
 }

@@ -1,6 +1,7 @@
 #include "Checker.h"
 #include "Field.h"
 #include <iostream>
+#include "SolverContract.h"
 
 CheckersMove::CheckersMove(Position startPos, Position endPos, Checker* cutChecker)
 {
@@ -51,6 +52,8 @@ std::vector<CheckersMove> Checker::findCutMoves()
 
 			if (enemyCell != NULL) {
 				stepPos = std::make_pair(stepPos.first + direction.first, stepPos.second + direction.second);
+				cell = field->cells[stepPos.first][stepPos.second];
+
 				if (cell == NULL && field->inArea(stepPos)) {
 					movesToCut.push_back(CheckersMove(position, stepPos, enemyCell));
 				}
@@ -132,5 +135,5 @@ std::vector<CheckersMove> Checker::findMoves()
 bool Checker::canBecomeKing()
 {
 	if (isKing) return false;
-	return isWhite && position.first == 0 && !isWhite && position.first == 7;
+	return isWhite && position.first == 0 || !isWhite && position.first == 7;
 }

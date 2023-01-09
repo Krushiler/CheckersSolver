@@ -25,6 +25,12 @@
     <Filter Include="Файлы заголовков\view">
       <UniqueIdentifier>{16109802-bff8-4164-88fb-d17f3ff69a72}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Исходные файлы\utils">
+      <UniqueIdentifier>{daba607f-5b7c-464b-9945-f9bd6dc7028c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\utils">
+      <UniqueIdentifier>{9f4e32f2-5eba-4ee9-ab45-70942cc24b51}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -48,11 +54,14 @@
     <ClCompile Include="Field.cpp">
       <Filter>Исходные файлы\domain</Filter>
     </ClCompile>
-    <ClCompile Include="CheckersUtil.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
     <ClCompile Include="FileSolverView.cpp">
       <Filter>Исходные файлы\view</Filter>
+    </ClCompile>
+    <ClCompile Include="CheckersUtil.cpp">
+      <Filter>Исходные файлы\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="CmdUtils.cpp">
+      <Filter>Исходные файлы\utils</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -74,11 +83,14 @@
     <ClInclude Include="Field.h">
       <Filter>Файлы заголовков\domain</Filter>
     </ClInclude>
-    <ClInclude Include="CheckersUtil.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
     <ClInclude Include="FileSolverView.h">
       <Filter>Файлы заголовков\view</Filter>
+    </ClInclude>
+    <ClInclude Include="CmdUtils.h">
+      <Filter>Файлы заголовков\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="CheckersUtil.h">
+      <Filter>Файлы заголовков\utils</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

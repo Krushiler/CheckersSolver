@@ -28,5 +28,7 @@ public:
 	std::vector<Checker*> getWhiteCheckers();
 	std::vector<Checker*> getBlackCheckers();
 
+	int getScoreDifference(bool whiteWinNeeded);
+
 	void addChecker(Position position, bool isWhite, bool isKing);
 };

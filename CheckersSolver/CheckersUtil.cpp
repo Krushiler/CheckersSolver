@@ -61,5 +61,66 @@ Position getPositionFromString(std::string positionString)
 
     int yPos = '8' - positionString[1];
     int xPos = positionString[0] - 'a';
+
+    if ((yPos + xPos) % 2 == 0) {
+        throw PositionParseException();
+    }
+
     return std::make_pair(yPos, xPos);
+}
+
+std::vector<CheckerInputDto> readCheckers(std::istream& istream)
+{
+    std::vector<CheckerInputDto> input;
+
+    for (int i = 0; i < 2; i++) {
+        std::string colorString;
+        int colorCount;
+        istream >> colorString >> colorCount;
+        bool isWhite = false;
+
+        colorString = toLowerCase(colorString);
+
+        if (colorString == "white:" || colorString == "white") {
+            isWhite = true;
+        }
+        else if (colorString == "black:" || colorString == "black") {
+            isWhite = false;
+        }
+        else {
+            throw PositionParseException();
+        }
+
+        if (istream.fail()) {
+            throw PositionParseException();
+        }
+
+        for (int j = 0; j < colorCount; j++) {
+            std::string positionString;
+            istream >> positionString;
+            bool isKing = false;
+            if (toLowerCase(positionString)[0] == 'm') {
+                isKing = true;
+                positionString.erase(0, 1);
+            }
+
+            Position position;
+
+            try {
+                position = getPositionFromString(positionString);
+            }
+            catch (PositionParseException e) {
+                throw PositionParseException();
+            }
+
+            for (auto i : input) {
+                if (i.position.first == position.first && i.position.second == position.second) {
+                    throw PositionParseException();
+                }
+            }
+
+            input.push_back(CheckerInputDto(position, isWhite, isKing));
+        }
+    }
+    return input;
 }

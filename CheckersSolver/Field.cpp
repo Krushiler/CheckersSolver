@@ -1,5 +1,4 @@
 #include "Field.h"
-#include <iostream>
 
 Field::Field() {
 	for (int i = 0; i < 8; i++) {
@@ -50,26 +49,24 @@ void Field::moveChecker(CheckersMove move)
 	auto to = move.endPos;
 
 	if ((*this)[from] != NULL) {
-
 		auto movedChecker = cells[from.first][from.second];
+
 		cells[from.first][from.second] = NULL;
 
 		cells[to.first][to.second] = movedChecker;
-		cells[to.first][to.second]->position = to;
-		
-		if (cells[to.first][to.second]->canBecomeKing()) {
-			cells[to.first][to.second]->isKing = true;
+		movedChecker->position = to;
+
+		if (movedChecker->canBecomeKing()) {
+			movedChecker->isKing = true;
 		}
 
 		auto cutChecker = move.cutChecker;
 
 		if (cutChecker != NULL) {
 			cells[cutChecker->position.first][cutChecker->position.second] = NULL;
-			
 			auto movedCheckerMoves = movedChecker->findCutMoves();
 			if (!movedCheckerMoves.empty()) {
 				avaliableMoves = movedCheckerMoves;
-				avaliableMoves.push_back(CheckersMove(movedChecker->position, movedChecker->position, NULL));
 			}
 
 			else {
@@ -160,4 +157,31 @@ void Field::addChecker(Position position, bool isWhite, bool isKing)
 	cells[position.first][position.second] = new Checker(position, isWhite, isKing, this);
 	avaliableMoves.clear();
 	findAvaliableMoves();
+}
+
+int Field::getScoreDifference(bool whiteWinNeeded)
+{
+	int whiteScore = 0;
+	int blackScore = 0;
+
+	auto whiteCheckers = getWhiteCheckers();
+	auto blackCheckers = getBlackCheckers();
+
+	for (auto checker : whiteCheckers) {
+		if (checker->isKing) whiteScore += 3;
+		else whiteScore++;
+	}
+
+	for (auto checker : blackCheckers) {
+		if (checker->isKing) blackScore += 3;
+		else blackScore++;
+	}
+
+	int difference = whiteScore - blackScore;
+	
+	if (!whiteWinNeeded) {
+		difference *= -1;
+	}
+
+	return difference;
 }
