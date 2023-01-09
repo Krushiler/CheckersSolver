@@ -29,6 +29,7 @@ SolverResult CheckersSolver::findMoves(Field* field, std::vector<CheckersMove> m
     std::vector<SolverResult> results;
     
     for (auto& move : fieldMoves) {
+        checkedCombinations++;
 
         std::vector<CheckersMove> newMoves(moves);
 
@@ -72,4 +73,9 @@ SolverResult CheckersSolver::getMinimalMovesCount(Field* field, bool whiteFirstS
     int scoreDifference = newField->getScoreDifference(whiteWinNeeded);
     
     return findMoves(newField, std::vector<CheckersMove>(), 0, whiteFirstStep, whiteWinNeeded, scoreDifference);
+}
+
+CheckersSolver::CheckersSolver()
+{
+    checkedCombinations = 0;
 }

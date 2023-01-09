@@ -14,7 +14,7 @@ namespace SolverContract {
 	class View {
 	public:
 		virtual void showCheckersInput() = 0;
-		virtual void showResult(Field* startField, SolverResult result) = 0;
+		virtual void showResult(Field* startField, SolverResult result, int combinationsChecked) = 0;
 	};
 
 	class Presenter {

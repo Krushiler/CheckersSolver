@@ -18,6 +18,11 @@ class CheckersSolver
 private:
     SolverResult findMoves(Field* field, std::vector<CheckersMove> moves, int movesCount, bool whiteStart, bool whiteWinNeeded, int startScore);
 public:
+
+    int checkedCombinations;
+
+    CheckersSolver();
+
     SolverResult getMinimalMovesCount(Field* field, bool whiteFirstStep, bool whiteWinNeeded);
 };
 

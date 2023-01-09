@@ -32,7 +32,7 @@ void FileSolverView::showCheckersInput()
 	presenter->solve(input, true, true);
 }
 
-void FileSolverView::showResult(Field* startField, SolverResult result)
+void FileSolverView::showResult(Field* startField, SolverResult result, int combinationsChecked)
 {
 	if (result.success == true) {
 		cout << endl;
@@ -41,8 +41,10 @@ void FileSolverView::showResult(Field* startField, SolverResult result)
 			cout << getFieldString(startField) << endl << "________" << endl << endl;
 		}
 		for (auto& move : result.moves) {
-			ostream << getMoveString(move) << endl;
+			string colorString = move.whiteMove ? "White" : "Black";
+			ostream << getMoveString(move) << "    " << colorString << endl;
 		}
+		ostream << endl << "Проверено ходов: " << combinationsChecked;
 	}
 	else {
 		ostream << "Нельзя победить в 2-3 хода";

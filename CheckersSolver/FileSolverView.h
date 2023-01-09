@@ -15,5 +15,5 @@ public:
 	FileSolverView(SolverContract::Presenter* presenter, std::istream& istream, std::ostream& ostream);
 
 	void showCheckersInput();
-	void showResult(Field* startField, SolverResult result);
+	void showResult(Field* startField, SolverResult result, int combinationsChecked);
 };

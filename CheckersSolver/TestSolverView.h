@@ -9,6 +9,6 @@ public:
 	TestSolverView(SolverContract::Presenter* presenter);
 
 	void showCheckersInput();
-	void showResult(Field* startField, SolverResult result);
+	void showResult(Field* startField, SolverResult result, int combinationsChecked);
 };
 

@@ -10,8 +10,9 @@ struct CheckersMove {
 	Position startPos;
 	Position endPos;
 	Checker* cutChecker;
+	bool whiteMove;
 
-	CheckersMove(Position startPos, Position endPos, Checker* cutChecker);
+	CheckersMove(Position startPos, Position endPos, Checker* cutChecker, bool whiteMove);
 };
 
 class Checker

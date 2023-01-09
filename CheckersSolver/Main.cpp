@@ -31,6 +31,8 @@ int main(int argc, char* argv[])
     
     SolverPresenter* presenter = new SolverPresenter();
     SolverContract::View* view = new FileSolverView(presenter, *inputStream, *outputStream);
+
     //SolverContract::View* view = new TestSolverView(presenter);
+
     presenter->attachView(view);
 }

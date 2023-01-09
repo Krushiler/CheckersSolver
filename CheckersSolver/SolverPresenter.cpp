@@ -18,5 +18,5 @@ void SolverPresenter::solve(std::vector<CheckerInputDto> inputDtos, bool firstWh
 	CheckersSolver solver = CheckersSolver();
 	auto result = solver.getMinimalMovesCount(new Field(*field), firstWhiteStep, whiteWinNeeded);
 
-	this->view->showResult(new Field(*field), result);
+	this->view->showResult(new Field(*field), result, solver.checkedCombinations);
 }

@@ -3,11 +3,12 @@
 #include <iostream>
 #include "SolverContract.h"
 
-CheckersMove::CheckersMove(Position startPos, Position endPos, Checker* cutChecker)
+CheckersMove::CheckersMove(Position startPos, Position endPos, Checker* cutChecker, bool whiteMove)
 {
 	this->startPos = startPos;
 	this->endPos = endPos;
 	this->cutChecker = cutChecker;
+	this->whiteMove = whiteMove;
 }
 
 Checker::Checker(Position position, bool isWhite, bool isKing, Field* field)
@@ -55,7 +56,7 @@ std::vector<CheckersMove> Checker::findCutMoves()
 				cell = field->cells[stepPos.first][stepPos.second];
 
 				if (cell == NULL && field->inArea(stepPos)) {
-					movesToCut.push_back(CheckersMove(position, stepPos, enemyCell));
+					movesToCut.push_back(CheckersMove(position, stepPos, enemyCell, isWhite));
 				}
 				else {
 					break;
@@ -68,7 +69,7 @@ std::vector<CheckersMove> Checker::findCutMoves()
 				if (cell->isWhite != isWhite) {
 					stepPos = std::make_pair(cell->position.first + direction.first, cell->position.second + direction.second);
 					if (field->inArea(stepPos) && field->cells[stepPos.first][stepPos.second] == NULL) {
-						movesToCut.push_back(CheckersMove(position, stepPos, cell));
+						movesToCut.push_back(CheckersMove(position, stepPos, cell, isWhite));
 					}
 				}
 				else {
@@ -118,7 +119,7 @@ std::vector<CheckersMove> Checker::findMoves()
 		Position currPos = std::make_pair(position.first + direction.first, position.second + direction.second);
 
 		while (field->inArea(currPos) && field->cells[currPos.first][currPos.second] == NULL) {
-			moves.push_back(CheckersMove(position, currPos, NULL));
+			moves.push_back(CheckersMove(position, currPos, NULL, isWhite));
 
 			if (!isKing) {
 				break;

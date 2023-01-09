@@ -27,7 +27,7 @@ void TestSolverView::showCheckersInput()
 	presenter->solve(input, true, true);
 }
 
-void TestSolverView::showResult(Field* startField, SolverResult result)
+void TestSolverView::showResult(Field* startField, SolverResult result, int combinationsChecked)
 {
 	if (result.success == true) {
 		std::cout << getFieldString(startField) << std::endl << "________" << std::endl << std::endl;;
